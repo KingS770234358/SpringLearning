@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!-- Spring 关于 mybatis的配置文件 只进行跟数据库有关的配置
+         千万注意 上面encoding="UTF8" 而不能是UTF-8 -->
+
+    <!-- 将配置properties文件以Bean的形式注入到Spring容器中
+         PropertyPlaceholderConfigurer弃用了,使用PropertiesFactoryBean这个类
+         这里可以在list标签中注入多个配置文件,之后可以通过${}取值}
+         id 注入的配置名称,方便引用 四种方式
+    -->
+<!--    方式一:context:property-placeholder 要引入命名空间 但是只能加载一个配置properties文件-->
+<!--    <context:property-placeholder location="database.properties"/>-->
+
+<!--    方式二: util:properties 要引入命名空间 可以加载多个properties配置文件
+        通过该标签定义多个配置字典 p1 p2 取属性时 需要通过 value="#{id['password']}"的方式获取
+        十分麻烦-->
+<!--    <util:properties id="p1"  local-override="true" location="classpath:database.properties"/>-->
+<!--    <util:properties id="p2"  local-override="true" location="classpath:database2.properties"/>-->
+
+<!--    方式三: 先将要加载的配置properties文件都放入一个ArrayList 然后通过引用加载
+        使用  org.springframework.beans.factory.config.PropertyPlaceholderConfigurer 类加载上述配置文件列表
+        该方法在Spring5.2.3中已经废弃-->
+
+<!--    方式四: 先将要加载的配置properties文件都放入一个ArrayList 然后通过引用加载-->
+<!--    使用 org.springframework.context.support.PropertySourcesPlaceholderConfigurer 类加载上述配置文件列表
+        也可以在 bean的property name="locations"下直接使用list标签-->
+    <!-- 将多个配置文件位置放到列表中 -->
+    <bean id="propertyResourcesList" class="java.util.ArrayList">
+        <constructor-arg>
+            <list>
+                <!-- 这里支持多种寻址方式：classpath和file  这里用的classpath-->
+                <value>classpath:database.properties</value>
+                <value>classpath:database2.properties</value>
+            </list>
+        </constructor-arg>
+    </bean>
+    <!-- 将配置文件读取到容器中，交给Spring管理 -->
+        <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer" >
+        <property name="locations" ref="propertyResourcesList">
+<!--            <list>-->
+<!--                <value>classpath:database.properties</value>-->
+<!--                <value>classpath:database2.properties</value>-->
+<!--            </list>-->
+        </property>
+    </bean>
+    <!-- 配置DataSource:Spring将数据源的配置也视为一种bean注入到容器中
+         使用Spring的数据源[替换Mybatis的核心配置 c3p0 dbcp druid]
+         这里使用Spring提供的JDBC包下的DriverManagerDataSource数据源
+                   这里使用到了pom.xml中[spring-jdbc的依赖]
+         可以直接点到DriverManagerDataSource的源码里看,里面使用了下述的property
+         使用properties文件中的属性之后,可以看到被使用的属性变成橙色,代表使用成功
+         id 数据源的名称,方便引用
+    -->
+    <bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+<!--    <bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+<!--        <property name="driverClassName" value="#{p1['jdbcdriver']}"/>-->
+<!--        <property name="url" value="#{p1['url']}"/>-->
+<!--        <property name="username" value="#{p2['databaseUsername']}"/>-->
+<!--        <property name="password" value="#{p2['password']}"/>-->
+<!--    </bean>-->
+    <!-- 注入SqlSessionFactory工厂
+         使用的类org.mybatis.spring.SqlSessionFactoryBean
+         这里用到了pom.xml中[mybatis-spring的依赖]
+    -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 这里设置SqlSession需要的数据源,引用上述定义的dataSource Bean -->
+        <!-- 对比原来Mybatis的三部曲 1.工厂构造器 2.工厂 3.SqlSession -->
+        <property name="dataSource" ref="datasource"/>
+        <!-- 在这里也可以绑定Mybatis(核心)配置文件,因此这个部分
+             可以[完全取代]Mybatis核心配置文件
+             或者[用于扩充]Mybatis核心配置文件
+             configLocation属性定义 Mybatis核心配置文件 的位置
+             classpath:指的就是resource目录或者java目录
+         -->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!-- 这里直接完成Mapper.xml的注册 -->
+        <property name="mapperLocations" value="classpath:com/wq/mapper/*Mapper.xml"/>
+    </bean>
+    <!-- 注入sqlSession Bean使用的spring类org.mybatis.spring.SqlSessionTemplate,
+         换句话说,SqlSessionTemplate实现了SqlSession的功能,以后会遇到很多XXXTemplate,都是Spring和他们的整合
+         这里用到了pom.xml中[mybatis-spring的依赖]
+         这里需要传入参数进行设置,否则红色波浪线,不知道如何设置可以尝试着点进去看源码
+    -->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <!-- 因为 SqlSessionTemplate 没有set方法,所以只能使用[构造器注入]
+             需要一个sqlSessionFactory来构造SqlSession对象,引用上面注入的
+        -->
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+        <!-- 这样变成面向对象,需要开始写 *MapperImpl.java类来实现原来test类里写的东西
+             1.获得SqlSession 2.获得对应的Mapper
+             3.执行接口对应的方法(底部还是调用Mapper.xml文件写的sql语句)
+             4.获得结果,关闭连接
+         -->
+    </bean>
+</beans>

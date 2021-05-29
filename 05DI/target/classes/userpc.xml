@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- p c命名空间的声明
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+    -->
+    <bean id="user" class="com.wq.pojo.User">
+        <property name="name" value="xuqing"/>
+        <property name="age" value="15"/>
+    </bean>
+    <!-- p命名空间直接属性注入 property的意思-->
+    <bean id="user2" class="com.wq.pojo.User"
+          p:name="郭"
+          p:age="4"/>
+
+    <!-- c命名空间构造器注入 类必须要有有参构造器 -->
+    <bean id="user3" class="com.wq.pojo.User"
+          c:name="哈哈"
+          c:age="6666"/>
+</beans>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 以前都是spring的手动装配
+         这节使用spring的自动装配:
+         是一种bean依赖的方式,Spring会在上下文中自动寻找, 并自动个bean装配属性
+         有三种装配的方式:
+         1.xml中显式装配(已经讲的)
+         2.java中显式装配(还没讲)
+         3.隐式的自动装配(这节讲的)
+    -->
+    <bean id="dog" class="com.wq.pojo.Dog">
+        <property name="name" value="dog1"/>
+    </bean>
+    <bean id="cat" class="com.wq.pojo.Cat">
+        <property name="name" value="cat1"/>
+    </bean>
+    <!-- 不能重复定义id相同的bean -->
+<!--    <bean id="dog" class="com.wq.pojo.Dog">-->
+<!--        <property name="name" value="dog2"/>-->
+<!--    </bean>-->
+
+    <!-- 属性显式装配 -->
+    <bean id="people" class="com.wq.pojo.People">
+        <property name="name" value="王强"/>
+        <property name="cat" ref="cat"/>
+        <property name="dog" ref="dog"/>
+    </bean>
+    <!-- 属性隐式自动装配 -->
+    <!-- byName:
+         要求所有bean的id唯一
+         会自动在容器上下文中查找 和bean对象的set方法后面的值对应的beanid
+         比如people有个setDog方法,就会在xml文件中寻找以dog为id的bean自动装配people.dog属性
+     -->
+    <bean id="people_auto" class="com.wq.pojo.People" autowire="byName">
+        <property name="name" value="王强"/>
+        <!-- 去掉两行重复多余的ref -->
+    </bean>
+    <!-- byType:
+     会自动在容器上下文中查找 和bean对象的set方法属性类型相同的bean class
+     比如people有个setDog方法,people.dog的类型是Dog
+     就会在xml文件中寻找以Dog为class的bean自动装配people.dog属性
+     这样即使id变化也没事,id也可以省略
+     但是要求bean类型全局唯一,也就是要求Dog类型的bean在这里面只有一个
+     -->
+    <bean id="people_auto2" class="com.wq.pojo.People" autowire="byType">
+        <property name="name" value="王强"/>
+        <!-- 去掉两行重复多余的ref -->
+    </bean>
+</beans>

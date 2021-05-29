@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 该Spring的全局配置文件 注意:encoding="UTF8"-->
+    <import resource="spring-mybatis.xml"/>
+<!--    <import resource="spring-springmvc.xml"/>-->
+    <!-- 注入UserMapperImpl 相当于原来学Mybatis时候的测试类 -->
+    <bean id="userMapperImpl" class="com.wq.mapper.UserMapperImpl">
+        <!-- 通过注入的方式引用上面定义的sqlSessionTemplate(sqlSession)赋值 -->
+        <property name="sqlSession" ref="sqlSession"/>
+    </bean>
+    <!-- 继承SqlSessionDaoSupport方式实现
+         注意这个 class="com.wq.mapper.UserMapperImpl2" 不要写成com.wq.mapper.UserMapperImpl
+    -->
+    <bean id="userMapperImpl2" class="com.wq.mapper.UserMapperImpl2">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+</beans>

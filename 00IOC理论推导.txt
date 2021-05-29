@@ -1,0 +1,44 @@
+2、IOC理论推导
+1.UserDao接口
+2.UserDaoImpl实现类
+3.UserService业务接口
+4.UserServiceImpl业务实现类
+2.1 以往思路:当新的需求产生时,就编写新的UserDaoImpl实现类,无法适应用户变更
+我们使用一个set接口实现:
+// 利用set方法动态传入DAO层的接口实现类来实现这个接口[注入！！！]
+public void setUserDao(UserDao userDao) {
+    this.userDao = userDao;
+}
+2.2 好处:
+· 之前,程序是主动创建对象,控制权在程序员手上 写死设置
+    // 【DAO层】接口类型声明 = new 【DAO层】接口具体的接口实现类构造函数
+    private UserDao userDao = new UserDaoImpl();
+程序员设置了用哪个DAO层的接口实现用户就只能用哪个DAO层接口实现,用户无法变更
+
+· 使用了set注入之后,程序不再具有主动性,成为被动的接收对象
+用户传入哪个DAO层接口实现,就用那个DAO层接口实现
+2.3 小结
+1)没有IoC的程序中,我们使用面向对象编程,对象的创建与对象间的依赖关系完全硬编码在程序中,对象的创建由程序自己控制;
+2)控制反转后将对象的创建转移给第三方，所谓控制反转就是：获得依赖对象的方式反转了。
+这种思想从本质上解决了问题,程序员不用再去管理对象的创建,系统的耦合性降低
+可以更加专注在业务的实现上(DAO层接口的实现)【这是IOC的原型】
+注:
+控制反转IoC(Inversion of Control)，是一种设计思想
+DI(依赖注入)是实现IoC的一种方法，也有人认为DI只是IoC的另一种说法。
+
+2.4 IOC实现方式
+IoC是Spring框架的核心内容，使用多种方式完美的实现了IoC
+1)可以使用XML配置
+2)也可以使用注解
+3)新版本的Spring也可以零配置实现IoC。
+采用XML方式配置Bean的时候,Bean的定义信息是和实现分离的
+采用注解的方式可以把两者合为一体,Bean的定义信息直接以注解的形式定义在实现类中,从而达到了零配置的目的。
+
+2.5 采用xml文件配置流程
+1)Spring容器在初始化时先读取applicationContext.xml配置文件
+2)POJO根据配置文件或元数据创建与组织对象(组装Bean),存入容器Spring IoC Container中
+程序使用时再从Ioc容器中取出需要的对象Bean
+
+2.6 总结
+控制反转是一种通过描述（XML或注解）并通过第三方去生产或获取特定对象的方式。
+在Spring中实现控制反转的是IoC容器，其实现方法是依赖注入（Dependency Injection,DI）。

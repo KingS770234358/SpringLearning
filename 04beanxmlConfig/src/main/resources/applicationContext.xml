@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- import 标签:一般用于团队开发,可以将多个bean.xml文件导入,合并成为一个applicationContext.xml -->
+    <!-- 如果多个bean.xml中存在id重复现象 后import的会覆盖前面的 -->
+    <import resource="beans1.xml"/>
+    <import resource="beans.xml"/>
+</beans>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 该Spring的全局配置文件 注意:encoding="UTF8"-->
+    <import resource="spring-mybatis.xml"/>
+    <bean id="userMapperImpl" class="com.wq.mapper.UserMapperImpl">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+</beans>

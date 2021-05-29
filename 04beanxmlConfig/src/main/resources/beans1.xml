@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="user1" class="com.wq.pojo.User2" name="user1_alias1,user1_alias2 user1_alias3;user1_alias4">
+        <!-- 没有无参构造方式的类的属性定义方式
+             constructor-arg
+         -->
+        <constructor-arg name="name" value="hhhaaaa"/>
+        <constructor-arg name="id" value="99999"/>
+    </bean>
+</beans>

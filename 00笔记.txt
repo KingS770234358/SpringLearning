@@ -1,0 +1,61 @@
+1、Spring (适用于任何java应用)
+1.1 简介
+· 2002年,首次推出了Spring的雏形:interface21框架
+· 2004年3月24号,Spring框架以interface21位基础经过重新设计,并不断丰富其内涵,发布1.0正式版
+· 作者 Rod Johnson (音乐博士)
+· Spring理念: 使现有的技术更加容易使用,整合了现有的技术框架
+· *SSH : Struct2 + Spring + Hibernate全自动持久化框架
+· SSM : SpringMVC + Spring + Mybatis半自动持久化框架
+官网地址: https://spring.io/projects/spring-framework#overview
+官方下载地址: http://repo.spring.io/release/org/springframework/spring
+Github地址: https://github.com/spring-projects/spring-framework
+maven包网址: https://mvnrepository.com/
+1.2 优点
+· Spring是一个开源的免费的容器(框架)
+· Spring是一个轻量级、非入侵式的框架
+非入侵式:引入Spring不会改变原来代码的任何情况
+· 控制反转(IOC) , 面向切面编程(AOP)
+· 支持事务的处理, 对框架整合的支持
+
+总结: Spring就是一个轻量级的控制反转(IOC)和面向切面编程(AOP)的框架
+
+1.3 Spring的七大模块组成
+
+Spring AOP           Spring ORM(对象关系映射)      Spring Web              Spring Web MVC
+Source-level         Hibernate support            WebApplicationContext   Web MVC
+metadata             iBats support                Multipart resolver      Framework
+AOP infrastructure   JDO support                  Web utlities            Web Views
+                                                                          JSP/Velocity
+                                                                          PDF/Export
+                     Spring DAO                   Spring Context
+                     Transaction infrastructure   Application context
+                     JOBC support                 UI support
+                     DAO support                  Validation
+                                                  JNDL EJB support and
+                                                  remodeling Mail
+
+                                Spring Core(支撑所有的基础)
+                                Supporting utlities
+                                Bean container
+
+1.4 Spring:Source for modern java
+现代化的java开发---基于Spring的开发
+App ===> Spring Boot ===> Spring Cloud ===> Spring Cloud Data Flow
+           构建一切          协调一切              连接一切
+· Spring Boot
+··一个快速开发的脚手架
+··基于SpringBoot可以快速开发单个微服务
+··约定大于配置
+· Spring Cloud
+··SpringCloud是基于SpringBoot实现的
+###############################################
+#学习SpringBoot的前提是完全掌握Spring及SpringMVC
+###############################################
+
+1.5 弊端
+配置太繁琐
+###############################################################
+IDEA的Maven配置
+file->setting->maven->Maven Home Directory/User setting File/Local repository
+User setting File: 设置Local repository、国内镜像、profile
+###############################################################

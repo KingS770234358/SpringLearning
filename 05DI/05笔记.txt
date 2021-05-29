@@ -1,0 +1,15 @@
+DI 依赖注入
+之前4个案例讲了
+constructor构造器注入
+setter方式注入[重点]
+拓展方式注入
+
+setter方式注入[重点]
+依赖:bean对象的创建依赖于容器
+注入:bean对象中的所有属性由容器来注入
+
+点击窗口 split vertically 可以分窗口
+
+更多信息参考官网 1.4.2 Dependencies Injection detail
+
+junit包可以方便的增加代码起跑点,可以只跑代码里的某个非主函数

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 通过bean标签注入对象
+         ·id 创建的对象名
+         ·class bean对象所对应的类型 全限定名:包名+类名
+         ·name 别名,但是比alias标签更高级 用空格 逗号 分号等常用分隔符分隔都可以
+         可以同时起多个别名 name = "别名1 别名2,别名3..."
+         ·autowire 自动导入 到时候再说
+         ·scope 作用域 默认单例 也可以设置成原型模式创建多个 到时候再说
+    -->
+    <bean id="user1" class="com.wq.pojo.User" name="user1_alias1,user1_alias2 user1_alias3;user1_alias4">
+        <!-- 没有无参构造方式的类的属性定义方式
+             constructor-arg
+         -->
+        <constructor-arg name="name" value="形参名传参"/>
+        <constructor-arg name="id" value="1"/>
+    </bean>
+    <!-- 通过alias标签设置user1的别名 可以通过别名获取bean -->
+    <alias name="user1" alias="user1_alias"/>
+
+
+</beans>

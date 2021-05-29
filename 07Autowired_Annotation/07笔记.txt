@@ -1,0 +1,35 @@
+Annotation注解实现自动装配
+参考官方文档1.9
+基于注解的配置比基于xml文件的配置来的好
+1.在beans.xml文件里导入注解支持
+加入context命名空间xmlns 中的ns就是namespace 改变中括号内容可以引入不同的命名空间
+<beans
+    在xmlns中加入
+    xmlns:[context]="http://www.springframework.org/schema/[context]"
+    在xsi:schemaLocation中加入
+    http://www.springframework.org/schema/[context]
+    https://www.springframework.org/schema/[context]/spring-[context].xsd
+
+>
+<context:annotation-config/>
+
+2.@Autowired 和 @Resource // 是javax是属于扩展库中，手动下载 配置maven依赖
+    /*
+         1.beans.xml文件中【已经有 dog 和 cat】的话 就可以Autowired自动装配
+         本质就是按照 先【byName】,找不到就按照【byType】方式注入
+         如果id没有符合条件的,就按照类型唯一注入,当类型也不唯一时报错
+         2.点击行号可以跳转到beans.xml文件中对应的bean创建位置
+         3.Autowired也可以放在dog和cat的set方法上
+         使用Autowired方法后 可以不写dog cat的set方法
+         4.(required = false)意味着传入的值允许为空 即使为空也不会错 默认是true
+         @Autowired(required = false)
+         5.当xml文件中Dog类型的bean不唯一(有多个)的时候 需要配合[Qualifier]来指定注入哪个bean
+         否则会报错
+    */
+    /*
+    // 使用javax的Resource注解进行对象注入 先byName 后byType
+    // 当xml中的Dog bean有多个时要指明使用哪个bean
+    // 否则报错 NoUniqueBeanDefinitionException
+    */
+
+3.可以使用.md格式文件做笔记

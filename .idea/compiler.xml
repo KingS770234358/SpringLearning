@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="11Aop_impl" />
+        <module name="06Autowired" />
+        <module name="02hellospring" />
+        <module name="04beanxmlConfig" />
+        <module name="09java_config_app" />
+        <module name="12SpringAndMybatis" />
+        <module name="08Annotation_dev" />
+        <module name="10proxy_mode" />
+        <module name="03ioc2" />
+        <module name="07Autowired_Annotation" />
+        <module name="05DI" />
+        <module name="01ioc1" />
+        <module name="13SpringTransaction" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="11" />
+  </component>
+</project>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 参考官网1.4.1 Constructor Argument Resolution -->
+
+    <!-- 使用以下注入对象的方法 类必须有它的 无参构造方法  不需要传参
+         直接使用property标签定义对象的属性
+         这种方式依赖于对象的getter setter方法
+    -->
+<!--    <bean id="user" class="com.wq.pojo.User">-->
+<!--        <property name="name" value="wangqiang"/>-->
+<!--    </bean>-->
+
+
+    <!-- 当类定义了有参构造方法 使用下面的方式注入对象
+         要使用constructor-arg标签来定义对象属性
+         这种方法不需要类有getter setter方法
+    -->
+    <!-- 第一种 形参下标方式传参 -->
+    <bean id="user" class="com.wq.pojo.User">
+        <constructor-arg index="0" value="nidemingzi"/>
+        <constructor-arg index="1" value="1"/>
+    </bean>
+    <!-- 第二种 对应参数类型传参
+     因此要求构造函数的形参不能有相同数据类型的形参 否则无法分辨
+     -->
+    <bean id="user1" class="com.wq.pojo.User">
+        <constructor-arg type="java.lang.String" value="对应参数类型传参"/>
+        <constructor-arg type="int" value="1"/>
+    </bean>
+    <!-- 第三种 形参名传参 -->
+    <bean id="user2" class="com.wq.pojo.User">
+        <constructor-arg name="name" value="形参名传参"/>
+        <constructor-arg name="id" value="1"/>
+    </bean>
+    <!-- 第四种 ref传参 -->
+    <!--<bean id="user2" class="com.wq.pojo.User">
+            <constructor-arg ref="ttt"/>
+            <constructor-arg ref="rrr"/>
+        </bean>
+        <bean id="ttt" class="x.y.ttt"/>
+        <bean id="rrr" class="x.y.rrr"/>
+    -->
+</beans>

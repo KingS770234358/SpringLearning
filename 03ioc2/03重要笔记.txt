@@ -1,0 +1,21 @@
+关于IDEA以及Spring5文件结构的一些问题:
+1.在父项目下创建子项目的时候,IDEA右下角会有提示
+import project / enable automatically import
+选择后者
+当创建新的子项目的时候就可以不用再选择了
+
+2.当加入一个子项目(module),父项目的pom.xml文件中的module就会增加一项
+当把一个子项目remove,父项目的pom.xml文件中的module就会减少一项
+
+=================================================================
+3.当一个子项目被remove了,再次创建同名子项目就会加入maven的ignore里面
+需要把它从ignore列表里去掉
+=================================================================
+4.不小心把自动提示 configure application context 关闭了
+对着右上角的绿色勾勾右键 ===> customize highlight level
+===>找到Spring 勾选即可
+
+本节课的一些问题
+在主程序中加载 applicationContex的xml文件路径从resource开始算起
+applicationContext.xml 是一种特殊的 beans.xml
+从IoC拿出来的Bean都是Object类型,要强制转换成我们需要的它的实际类型

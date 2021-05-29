@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wq.mapper.UserMapper">
+    <select id="selectUsers" resultType="User">
+        select *from mybatis.user;
+    </select>
+
+    <insert id="addUser" parameterType="User">
+        insert into mybatis.user(id, name, pwd) values(#{id},#{name},#{pwd});
+    </insert>
+    <delete id="deleteUser" parameterType="int">
+        <!-- 制造错误 使得提交事务失败 delete写成deletes -->
+        delete from mybatis.user where id = #{id};
+    </delete>
+</mapper>
